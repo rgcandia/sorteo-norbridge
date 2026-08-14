@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { Dices, Shuffle, ListOrdered } from 'lucide-react'
+import { AnimatePresence } from 'framer-motion'
+import { Dices, Shuffle, ListOrdered, RotateCcw } from 'lucide-react'
+import ConfirmResetModal from './ConfirmResetModal'
 import { NOMBRES_SEED, PREMIOS_SEED } from '../data/seed'
 import type { OrdenPremios } from '../hooks/useLottery'
 
@@ -13,6 +15,8 @@ interface SetupScreenProps {
   moverPremio: (idx: number, dir: -1 | 1) => void
   setOrden: (o: OrdenPremios) => void
   setClaveAdmin: (clave: string) => void
+  verificarClave: (clave: string) => boolean
+  onReiniciarTodo: () => void
   onComenzar: () => void
   onVolver: () => void
 }
@@ -27,12 +31,15 @@ export default function SetupScreen({
   moverPremio,
   setOrden,
   setClaveAdmin,
+  verificarClave,
+  onReiniciarTodo,
   onComenzar,
   onVolver,
 }: SetupScreenProps) {
   const [textoNombres, setTextoNombres] = useState(nombres.join('\n'))
   const [nuevoPremio, setNuevoPremio] = useState('')
   const [claveLocal, setClaveLocal] = useState(claveAdmin)
+  const [mostrarReset, setMostrarReset] = useState(false)
 
   function handleCargarSeed() {
     const n = NOMBRES_SEED.join('\n')
@@ -142,7 +149,7 @@ export default function SetupScreen({
       <footer className="setup-footer">
         <div className="setup-footer-contenido">
           <div className="clave-admin">
-            <label className="clave-admin-label">Clave de administrador (para reiniciar):</label>
+            <label className="clave-admin-label">Clave de administrador:</label>
             <input
               type="text"
               className="clave-admin-input"
@@ -150,6 +157,9 @@ export default function SetupScreen({
               onChange={(e) => setClaveLocal(e.target.value)}
               onBlur={() => setClaveAdmin(claveLocal.trim() || claveAdmin)}
             />
+            <button className="btn btn-danger" onClick={() => setMostrarReset(true)} title="Reiniciar sorteo">
+              <RotateCcw size={16} /> Reiniciar todo
+            </button>
           </div>
           <button
             className="btn btn-primary btn-grande"
@@ -162,6 +172,16 @@ export default function SetupScreen({
           </button>
         </div>
       </footer>
+
+      <AnimatePresence>
+        {mostrarReset && (
+          <ConfirmResetModal
+            verificarClave={verificarClave}
+            onConfirmar={onReiniciarTodo}
+            onCancelar={() => setMostrarReset(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   )
 }

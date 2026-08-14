@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Trophy, RotateCcw, X } from 'lucide-react'
+import { Trophy, RotateCcw } from 'lucide-react'
+import ConfirmResetModal from './ConfirmResetModal'
 import type { Resultado } from '../hooks/useLottery'
 
 interface ResultsScreenProps {
@@ -19,16 +20,6 @@ export default function ResultsScreen({
   onVolver,
 }: ResultsScreenProps) {
   const [mostrarReset, setMostrarReset] = useState(false)
-  const [clave, setClave] = useState('')
-  const [error, setError] = useState(false)
-
-  function confirmarReset() {
-    if (verificarClave(clave.trim())) {
-      onReiniciarTodo()
-    } else {
-      setError(true)
-    }
-  }
 
   return (
     <div className="results">
@@ -84,7 +75,7 @@ export default function ResultsScreen({
         <button className="btn btn-ghost" onClick={onVolver}>
           Volver al inicio
         </button>
-        <button className="btn btn-danger" onClick={() => { setMostrarReset(true); setClave(''); setError(false); }}>
+        <button className="btn btn-danger" onClick={() => setMostrarReset(true)}>
           <RotateCcw size={16} /> Reiniciar todo
         </button>
       </div>
@@ -92,46 +83,11 @@ export default function ResultsScreen({
       {/* Modal de confirmación con clave de admin */}
       <AnimatePresence>
         {mostrarReset && (
-          <motion.div
-            className="modal-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="modal-confirmar"
-              initial={{ scale: 0.85, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.85, opacity: 0 }}
-            >
-              <h3 className="modal-confirmar-titulo">Reiniciar sorteo</h3>
-              <p className="modal-confirmar-texto">
-                Se borrarán <strong>todos</strong> los participantes, premios y resultados.
-                Esta acción no se puede deshacer.
-              </p>
-              <input
-                type="password"
-                className="modal-confirmar-input"
-                placeholder="Clave de administrador"
-                value={clave}
-                onChange={(e) => { setClave(e.target.value); setError(false); }}
-                onKeyDown={(e) => e.key === 'Enter' && confirmarReset()}
-                autoFocus
-              />
-              {error && <p className="modal-confirmar-error">Clave incorrecta.</p>}
-              <div className="modal-acciones">
-                <button className="btn btn-ghost" onClick={() => setMostrarReset(false)}>
-                  Cancelar
-                </button>
-                <button className="btn btn-danger" onClick={confirmarReset}>
-                  <RotateCcw size={16} /> Confirmar y borrar
-                </button>
-              </div>
-              <button className="btn-x modal-cerrar" onClick={() => setMostrarReset(false)}>
-                <X size={20} />
-              </button>
-            </motion.div>
-          </motion.div>
+          <ConfirmResetModal
+            verificarClave={verificarClave}
+            onConfirmar={onReiniciarTodo}
+            onCancelar={() => setMostrarReset(false)}
+          />
         )}
       </AnimatePresence>
     </div>

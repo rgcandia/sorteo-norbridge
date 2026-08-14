@@ -44,6 +44,8 @@ export default function App() {
           moverPremio={moverPremio}
           setOrden={setOrden}
           setClaveAdmin={setClaveAdmin}
+          verificarClave={verificarClave}
+          onReiniciarTodo={() => { borrarTodo(); setPantalla('setup') }}
           onComenzar={() => setPantalla('lottery')}
           onVolver={() => setPantalla('splash')}
         />
