@@ -1,21 +1,11 @@
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Dices } from 'lucide-react'
+import LucesMarquee from './LucesMarquee'
 import { useSound } from '../hooks/useSound'
 
 interface SplashScreenProps {
   onIniciar: () => void
-}
-
-function LucesMarquee() {
-  const luces = Array.from({ length: 30 }, (_, i) => i)
-  return (
-    <div className="marquee">
-      {luces.map((i) => (
-        <span key={i} className="marquee-luz" style={{ animationDelay: `${(i % 10) * 0.15}s` }} />
-      ))}
-    </div>
-  )
 }
 
 export default function SplashScreen({ onIniciar }: SplashScreenProps) {

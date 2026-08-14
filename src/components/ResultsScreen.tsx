@@ -9,6 +9,8 @@ interface ResultsScreenProps {
   resultados: Resultado[]
   verificarClave: (clave: string) => boolean
   celebrar: boolean
+  puedeContinuar: boolean
+  onContinuar: () => void
   onNuevoSorteo: () => void
   onReiniciarTodo: () => void
   onVolver: () => void
@@ -18,6 +20,8 @@ export default function ResultsScreen({
   resultados,
   verificarClave,
   celebrar,
+  puedeContinuar,
+  onContinuar,
   onNuevoSorteo,
   onReiniciarTodo,
   onVolver,
@@ -94,7 +98,12 @@ export default function ResultsScreen({
       </motion.div>
 
       <div className="results-acciones">
-        <button className="btn btn-primary btn-grande" onClick={onNuevoSorteo}>
+        {puedeContinuar && (
+          <button className="btn btn-primary btn-grande" onClick={onContinuar}>
+            Continuar sorteo
+          </button>
+        )}
+        <button className="btn btn-ghost" onClick={onNuevoSorteo}>
           Nuevo sorteo
         </button>
         <button className="btn btn-ghost" onClick={onVolver}>

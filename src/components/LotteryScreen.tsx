@@ -3,6 +3,8 @@ import confetti from 'canvas-confetti'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Gift, Trophy, ListChecks, Maximize, Settings } from 'lucide-react'
 import Reel from './Reel'
+import LucesMarquee from './LucesMarquee'
+import Destellos from './Destellos'
 import { useSound } from '../hooks/useSound'
 import type { Resultado } from '../hooks/useLottery'
 
@@ -90,6 +92,8 @@ export default function LotteryScreen({
 
   return (
     <div className="lottery">
+      <Destellos />
+      <LucesMarquee />
       <div className="lottery-topbar">
         <button className="btn btn-ghost" onClick={onVolver} title="Configurar">
           <Settings size={18} />
@@ -160,6 +164,8 @@ export default function LotteryScreen({
           )}
         </div>
       </div>
+
+      <LucesMarquee />
 
       {/* Modal del ganador */}
       <AnimatePresence>

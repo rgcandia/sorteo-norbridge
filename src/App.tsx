@@ -76,6 +76,8 @@ export default function App() {
           resultados={resultados}
           verificarClave={verificarClave}
           celebrar={esFinal}
+          puedeContinuar={nombres.length > 0 && premios.length > 0}
+          onContinuar={() => setPantalla('lottery')}
           onNuevoSorteo={() => { reiniciar(); setPantalla('setup') }}
           onReiniciarTodo={() => { borrarTodo(); setPantalla('setup') }}
           onVolver={() => setPantalla('splash')}
