@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 import confetti from 'canvas-confetti'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Gift, Trophy, ListChecks, X, Maximize, Settings } from 'lucide-react'
+import { Gift, Trophy, ListChecks, Maximize, Settings } from 'lucide-react'
 import Reel from './Reel'
 import { useSound } from '../hooks/useSound'
 import type { Resultado } from '../hooks/useLottery'
@@ -32,7 +32,6 @@ export default function LotteryScreen({
   const [resultadoPremio, setResultadoPremio] = useState<string | null>(null)
   const [resultadoNombre, setResultadoNombre] = useState<string | null>(null)
   const [ganadorActual, setGanadorActual] = useState<Resultado | null>(null)
-  const [mostrarResultados, setMostrarResultados] = useState(false)
   const { resume, startReel, stopReel, playWin } = useSound()
 
   const dispararConfetti = useCallback(() => {
@@ -108,7 +107,7 @@ export default function LotteryScreen({
           </span>
         </div>
         <div className="lottery-topbar-acciones">
-          <button className="btn btn-ghost" onClick={() => setMostrarResultados(true)} title="Ver resultados">
+          <button className="btn btn-ghost" onClick={onTerminar} title="Ver resultados">
             <ListChecks size={18} />
             <span className="topbar-badge">{resultados.length}</span>
           </button>
@@ -198,46 +197,6 @@ export default function LotteryScreen({
                   Ver resultados
                 </button>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Panel de resultados */}
-      <AnimatePresence>
-        {mostrarResultados && (
-          <motion.div
-            className="modal-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setMostrarResultados(false)}
-          >
-            <motion.div
-              className="panel-resultados"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'tween', duration: 0.25 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="panel-resultados-header">
-                <h3>Resultados ({resultados.length})</h3>
-                <button className="btn-x" onClick={() => setMostrarResultados(false)}><X size={20} /></button>
-              </div>
-              {resultados.length === 0 ? (
-                <p className="empty">Todavía no hay ganadores.</p>
-              ) : (
-                <ul className="panel-lista">
-                  {resultados.map((r, i) => (
-                    <li key={`${r.ganador}-${i}`}>
-                      <span className="panel-num">{i + 1}</span>
-                      <span className="panel-ganador">{r.ganador}</span>
-                      <span className="panel-premio">{r.premio}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
             </motion.div>
           </motion.div>
         )}
