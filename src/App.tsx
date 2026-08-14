@@ -1,31 +1,69 @@
 import { useState } from 'react'
+import SplashScreen from './components/SplashScreen'
 import SetupScreen from './components/SetupScreen'
 import LotteryScreen from './components/LotteryScreen'
+import ResultsScreen from './components/ResultsScreen'
 import { useLottery } from './hooks/useLottery'
 
+type Pantalla = 'splash' | 'setup' | 'lottery' | 'results'
+
 export default function App() {
-  const [pantalla, setPantalla] = useState<'setup' | 'lottery'>('setup')
-  const { nombres, premios, ganadores, cargarNombres, cargarPremios, sortear } = useLottery()
+  const [pantalla, setPantalla] = useState<Pantalla>('splash')
+  const {
+    nombres,
+    premios,
+    resultados,
+    premioActual,
+    ordenPremios,
+    cargarNombres,
+    cargarPremios,
+    moverPremio,
+    setOrden,
+    sortearPremio,
+    sortearGanador,
+    reiniciar,
+  } = useLottery()
 
-  if (pantalla === 'setup' || nombres.length === 0) {
-    return (
-      <SetupScreen
-        nombres={nombres}
-        premios={premios}
-        cargarNombres={cargarNombres}
-        cargarPremios={cargarPremios}
-        onComenzar={() => setPantalla('lottery')}
-      />
-    )
+  switch (pantalla) {
+    case 'splash':
+      return <SplashScreen onIniciar={() => setPantalla('setup')} />
+
+    case 'setup':
+      return (
+        <SetupScreen
+          nombres={nombres}
+          premios={premios}
+          ordenPremios={ordenPremios}
+          cargarNombres={cargarNombres}
+          cargarPremios={cargarPremios}
+          moverPremio={moverPremio}
+          setOrden={setOrden}
+          onComenzar={() => setPantalla('lottery')}
+          onVolver={() => setPantalla('splash')}
+        />
+      )
+
+    case 'lottery':
+      return (
+        <LotteryScreen
+          nombres={nombres}
+          premios={premios}
+          premioActual={premioActual}
+          resultados={resultados}
+          sortearPremio={sortearPremio}
+          sortearGanador={sortearGanador}
+          onTerminar={() => setPantalla('results')}
+          onVolver={() => setPantalla('setup')}
+        />
+      )
+
+    case 'results':
+      return (
+        <ResultsScreen
+          resultados={resultados}
+          onReiniciar={() => { reiniciar(); setPantalla('setup') }}
+          onVolver={() => setPantalla('splash')}
+        />
+      )
   }
-
-  return (
-    <LotteryScreen
-      nombres={nombres}
-      premios={premios}
-      ganadores={ganadores}
-      sortear={sortear}
-      onVolver={() => setPantalla('setup')}
-    />
-  )
 }

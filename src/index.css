@@ -2,12 +2,12 @@
   --navy: #032960;
   --navy-dark: #021c40;
   --dorado: #C6A246;
-  --dorado-claro: #e0c066;
+  --dorado-claro: #e8c96a;
+  --negro: #05060a;
+  --negro-suave: #0a0d15;
   --texto: #ffffff;
   --texto-suave: #b8c4d9;
-  --fondo: #04102a;
-  --card: #0a1a3a;
-  --card-borde: #1e3054;
+  --borde: #2a3a55;
 }
 
 * {
@@ -23,7 +23,7 @@ html, body, #root {
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: var(--fondo);
+  background: var(--negro);
   color: var(--texto);
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
@@ -38,8 +38,8 @@ button {
 .btn {
   padding: 0.55rem 1.1rem;
   border-radius: 10px;
-  border: 1px solid var(--card-borde);
-  background: var(--card);
+  border: 1px solid var(--borde);
+  background: var(--negro-suave);
   color: var(--texto);
   font-size: 0.95rem;
   font-weight: 600;
@@ -48,7 +48,6 @@ button {
 
 .btn:hover {
   border-color: var(--dorado);
-  background: #0e2147;
 }
 
 .btn:disabled {
@@ -67,18 +66,20 @@ button {
 }
 
 .btn-primary {
-  background: var(--dorado);
+  background: linear-gradient(180deg, var(--dorado-claro), var(--dorado));
   border-color: var(--dorado);
-  color: var(--navy-dark);
+  color: var(--negro);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 18px rgba(198, 162, 70, 0.4);
 }
 
 .btn-primary:hover {
-  background: var(--dorado-claro);
+  filter: brightness(1.08);
 }
 
 .btn-grande {
-  font-size: 1.3rem;
-  padding: 0.9rem 2.5rem;
+  font-size: 1.25rem;
+  padding: 0.85rem 2.2rem;
   border-radius: 14px;
   letter-spacing: 0.04em;
 }
@@ -92,8 +93,367 @@ button {
   padding: 0 0.4rem;
 }
 
-.btn-x:hover {
+.btn-x:hover { color: #fff; }
+
+.btn-flecha {
+  background: transparent;
+  border: 1px solid var(--borde);
+  color: var(--dorado);
+  border-radius: 6px;
+  width: 26px;
+  height: 26px;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.btn-flecha:hover { border-color: var(--dorado); }
+.btn-flecha:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ===== Luces marquee (casino) ===== */
+.marquee {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  padding: 6px 0;
+  flex-shrink: 0;
+}
+
+.marquee-luz {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--dorado);
+  box-shadow: 0 0 12px 2px rgba(198, 162, 70, 0.8);
+  animation: parpadeo 1.2s ease-in-out infinite;
+}
+
+@keyframes parpadeo {
+  0%, 100% { opacity: 0.25; box-shadow: 0 0 4px 1px rgba(198, 162, 70, 0.3); }
+  50% { opacity: 1; box-shadow: 0 0 18px 5px rgba(198, 162, 70, 0.9); }
+}
+
+/* ===== Splash (portada) ===== */
+.splash {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at center, #0d2147 0%, var(--negro) 75%);
+}
+
+.splash-contenido {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  text-align: center;
+  padding: 1rem 2rem;
+}
+
+.splash-sello {
+  font-family: Georgia, serif;
+  color: var(--dorado);
+  letter-spacing: 0.4em;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.splash-titulo {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2.5rem, 8vw, 5.5rem);
+  line-height: 1.05;
   color: #fff;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+}
+
+.splash-titulo-dorado {
+  color: var(--dorado);
+  text-shadow: 0 0 40px rgba(198, 162, 70, 0.6);
+}
+
+.splash-lema {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.2rem, 2.6vw, 1.8rem);
+  color: var(--dorado-claro);
+}
+
+.splash-poema {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+  color: var(--texto-suave);
+  max-width: 560px;
+  line-height: 1.7;
+}
+
+.btn-jugar {
+  margin-top: 0.8rem;
+  background: linear-gradient(180deg, #f0d678, var(--dorado));
+  color: var(--negro);
+  border: 2px solid #f7e6a8;
+  border-radius: 16px;
+  padding: 1rem 2.4rem;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  box-shadow: 0 8px 30px rgba(198, 162, 70, 0.55);
+  animation: pulso-boton 2s ease-in-out infinite;
+}
+
+@keyframes pulso-boton {
+  0%, 100% { box-shadow: 0 8px 30px rgba(198, 162, 70, 0.55); }
+  50% { box-shadow: 0 8px 45px rgba(198, 162, 70, 0.9); }
+}
+
+/* ===== Lottery ===== */
+.lottery {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(ellipse at center, #0d2147 0%, var(--negro) 75%);
+}
+
+.lottery-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid rgba(198, 162, 70, 0.25);
+  flex-shrink: 0;
+}
+
+.lottery-titulo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lottery-brand {
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  color: var(--dorado);
+  font-size: 1.1rem;
+}
+
+.lottery-contador {
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}
+
+.lottery-topbar-acciones {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.lottery-ganados {
+  color: var(--dorado);
+  font-weight: 700;
+}
+
+.lottery-cuerpo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  min-height: 0;
+  padding: 1rem;
+}
+
+.reels {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.lottery-controles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 160px;
+}
+
+/* ===== Reel (tambor) ===== */
+.reel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reel-label {
+  font-weight: 800;
+  letter-spacing: 0.35em;
+  color: var(--dorado);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.reel-marco {
+  padding: 8px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #3a4a66, #141c2c);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.reel-ventana {
+  width: min(34vw, 380px);
+  height: 90px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #0a0f1c, #05070d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgba(198, 162, 70, 0.4);
+}
+
+.reel-item {
+  font-size: clamp(1.2rem, 2.6vw, 1.7rem);
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  padding: 0 1rem;
+  transition: filter 0.1s ease, opacity 0.1s ease;
+}
+
+.reel-item--rapido {
+  filter: blur(7px);
+  opacity: 0.45;
+}
+
+/* ===== Ganador / premio fijado ===== */
+.premio-fijado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+}
+
+.premio-fijado-label {
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+}
+
+.premio-fijado-valor {
+  font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+  font-weight: 700;
+  color: var(--dorado-claro);
+  margin-bottom: 0.6rem;
+}
+
+.ganador {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+}
+
+.ganador-label {
+  font-size: 1.2rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--dorado);
+}
+
+.ganador-premio {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: var(--dorado-claro);
+}
+
+.ganador-nombre {
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  text-shadow: 0 4px 30px rgba(198, 162, 70, 0.6);
+}
+
+/* ===== Results ===== */
+.results {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  overflow-y: auto;
+  background: radial-gradient(ellipse at top, #0d2147 0%, var(--negro) 70%);
+}
+
+.results-titulo {
+  font-family: Georgia, serif;
+  color: var(--dorado);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  margin-bottom: 0.3rem;
+}
+
+.results-sub {
+  color: var(--texto-suave);
+  margin-bottom: 1.5rem;
+}
+
+.results-tabla-wrap {
+  width: min(760px, 100%);
+  background: var(--negro-suave);
+  border: 1px solid rgba(198, 162, 70, 0.35);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.results-tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.results-tabla th {
+  text-align: left;
+  padding: 0.9rem 1.2rem;
+  color: var(--dorado);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border-bottom: 2px solid rgba(198, 162, 70, 0.4);
+  background: rgba(198, 162, 70, 0.08);
+}
+
+.results-tabla td {
+  padding: 0.8rem 1.2rem;
+  border-bottom: 1px solid var(--borde);
+  font-size: 1.05rem;
+}
+
+.results-num {
+  color: var(--dorado);
+  font-weight: 700;
+  width: 50px;
+}
+
+.results-premio {
+  color: var(--dorado-claro);
+}
+
+.results-ganador {
+  color: #fff;
+  font-weight: 700;
+}
+
+.results-acciones {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 /* ===== Setup ===== */
@@ -103,19 +463,25 @@ button {
   flex-direction: column;
   padding: 2rem;
   overflow-y: auto;
-  background: radial-gradient(ellipse at top, #07254e 0%, var(--fondo) 70%);
+  background: radial-gradient(ellipse at top, #0d2147 0%, var(--negro) 70%);
 }
 
 .setup-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.setup-volver {
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
 }
 
 .setup-header h1 {
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: 800;
   color: var(--dorado);
-  letter-spacing: 0.02em;
 }
 
 .setup-sub {
@@ -134,8 +500,8 @@ button {
 }
 
 .setup-card {
-  background: var(--card);
-  border: 1px solid var(--card-borde);
+  background: var(--negro-suave);
+  border: 1px solid var(--borde);
   border-radius: 16px;
   padding: 1.5rem;
   display: flex;
@@ -144,7 +510,7 @@ button {
 }
 
 .setup-card h2 {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   color: var(--dorado);
   font-weight: 700;
 }
@@ -152,9 +518,9 @@ button {
 .setup-card textarea {
   width: 100%;
   flex: 1;
-  min-height: 260px;
+  min-height: 240px;
   background: var(--navy-dark);
-  border: 1px solid var(--card-borde);
+  border: 1px solid var(--borde);
   border-radius: 10px;
   color: var(--texto);
   padding: 1rem;
@@ -175,6 +541,27 @@ button {
   flex-wrap: wrap;
 }
 
+.orden-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.orden-toggle-label {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+.orden-botones {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.orden-hint {
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+}
+
 .premio-input {
   display: flex;
   gap: 0.6rem;
@@ -183,7 +570,7 @@ button {
 .premio-input input {
   flex: 1;
   background: var(--navy-dark);
-  border: 1px solid var(--card-borde);
+  border: 1px solid var(--borde);
   border-radius: 10px;
   color: var(--texto);
   padding: 0.55rem 1rem;
@@ -206,7 +593,7 @@ button {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid #142850;
+  border-bottom: 1px solid #14203a;
   font-size: 0.95rem;
 }
 
@@ -215,199 +602,16 @@ button {
   border: none;
 }
 
+.premio-acciones {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+
 .setup-footer {
   display: flex;
   justify-content: center;
   padding-top: 1.5rem;
-}
-
-/* ===== Lottery ===== */
-.lottery {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: radial-gradient(ellipse at center, #07254e 0%, var(--fondo) 75%);
-}
-
-.lottery-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(198, 162, 70, 0.2);
-  flex-shrink: 0;
-}
-
-.lottery-titulo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.lottery-brand {
-  font-weight: 800;
-  letter-spacing: 0.3em;
-  color: var(--dorado);
-  font-size: 1.1rem;
-}
-
-.lottery-contador {
-  color: var(--texto-suave);
-  font-size: 0.85rem;
-}
-
-.lottery-topbar-acciones {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.lottery-cuerpo {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  position: relative;
-  min-height: 0;
-  padding: 1rem;
-}
-
-.bolillero-contenedor {
-  width: min(58vh, 58vw, 700px);
-  height: min(58vh, 58vw, 700px);
-  flex-shrink: 0;
-}
-
-.lottery-centro {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  min-width: 280px;
-}
-
-.btn-girar {
-  background: var(--dorado);
-  color: var(--navy-dark);
-  border: none;
-  border-radius: 50%;
-  width: 130px;
-  height: 130px;
-  font-size: 1.6rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  box-shadow: 0 8px 30px rgba(198, 162, 70, 0.4);
-  transition: transform 0.1s ease;
-}
-
-.btn-girar:hover {
-  transform: scale(1.06);
-}
-
-.sorteando {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--dorado);
-  animation: parpadeo 0.7s ease-in-out infinite;
-}
-
-@keyframes parpadeo {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-.ganador {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  text-align: center;
-  max-width: 600px;
-}
-
-.ganador-label {
-  font-size: 1.4rem;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--dorado);
-}
-
-.ganador-nombre {
-  font-size: clamp(2.5rem, 7vw, 5rem);
-  font-weight: 800;
-  color: #fff;
-  line-height: 1.1;
-  text-shadow: 0 4px 20px rgba(198, 162, 70, 0.5);
-}
-
-.ganador-premio {
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-  color: var(--dorado-claro);
-  margin-bottom: 1rem;
-}
-
-/* ===== Historial ===== */
-.historial-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: flex-end;
-  z-index: 100;
-}
-
-.historial {
-  width: min(420px, 90vw);
-  height: 100%;
-  background: var(--card);
-  border-left: 1px solid var(--dorado);
-  padding: 1.5rem;
-  overflow-y: auto;
-  animation: deslizar 0.25s ease;
-}
-
-@keyframes deslizar {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-}
-
-.historial-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.historial-header h3 {
-  color: var(--dorado);
-}
-
-.historial-lista {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.historial-lista li {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  padding: 0.6rem 0.75rem;
-  background: var(--navy-dark);
-  border-radius: 8px;
-  border-left: 3px solid var(--dorado);
-}
-
-.historial-nombre {
-  font-weight: 700;
-  font-size: 1rem;
-}
-
-.historial-premio {
-  color: var(--dorado-claro);
-  font-size: 0.85rem;
 }
 
 .empty {
@@ -416,23 +620,8 @@ button {
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
-  .setup-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .lottery-cuerpo {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .bolillero-contenedor {
-    width: min(50vh, 90vw);
-    height: min(50vh, 90vw);
-  }
-
-  .btn-girar {
-    width: 100px;
-    height: 100px;
-    font-size: 1.2rem;
-  }
+  .setup-grid { grid-template-columns: 1fr; }
+  .reels { flex-direction: column; gap: 1rem; }
+  .reel-ventana { width: min(80vw, 380px); }
+  .btn-jugar { font-size: 1.1rem; padding: 0.8rem 1.6rem; }
 }

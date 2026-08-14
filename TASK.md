@@ -6,7 +6,7 @@ Registro de tareas y decisiones del proyecto.
 
 ## Estado actual
 
-**Rediseño a Slot Machine Casino** — en curso. Se reemplaza el bolillero físico por una slot machine de 2 tambores (premio + ganador) con estética casino, portada "FELIZ DÍA MAESTROS" y pantalla de resultados.
+**Rediseño a Slot Machine Casino** — ✅ implementado. Portada "FELIZ DÍA MAESTROS" + 2 tambores (premio/ganador) + pantalla de resultados. Estética casino (negro + dorado + luces marquee).
 
 ---
 

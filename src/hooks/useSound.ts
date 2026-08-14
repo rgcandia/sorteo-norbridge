@@ -13,7 +13,7 @@ function getCtx(): AudioContext | null {
 }
 
 export function useSound() {
-  const tickTimer = useRef<ReturnType<typeof setInterval> | null>(null)
+  const reelTimer = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const resume = useCallback(() => {
     const ctx = getCtx()
@@ -36,30 +36,45 @@ export function useSound() {
     osc.stop(t + duration)
   }, [])
 
-  // Sonido de bolillas agitándose (click rápido repetido)
-  const startShuffle = useCallback(() => {
+  // Chime suave de entrada (portada)
+  const playChime = useCallback(() => {
     resume()
-    tickTimer.current = setInterval(() => {
-      playTone(500 + Math.random() * 600, 0.05, 'square', 0.05)
-    }, 70)
+    ;[659, 784, 988, 1319].forEach((f, i) => playTone(f, 0.5, 'sine', 0.08, i * 0.12))
   }, [playTone, resume])
 
-  const stopShuffle = useCallback(() => {
-    if (tickTimer.current) {
-      clearInterval(tickTimer.current)
-      tickTimer.current = null
-    }
-  }, [])
+  // Fanfarria de apertura ("¡Que empiecen los juegos!")
+  const playOpen = useCallback(() => {
+    resume()
+    ;[523, 659, 784, 1047].forEach((f, i) => playTone(f, 0.4, 'sawtooth', 0.08, i * 0.1))
+    playTone(1568, 0.8, 'sine', 0.1, 0.45)
+  }, [playTone, resume])
 
-  // Fanfarria de ganador
+  // Rueda girando (ticks rápidos de tambor)
+  const startReel = useCallback(() => {
+    resume()
+    stopReel()
+    reelTimer.current = setInterval(() => {
+      playTone(300 + Math.random() * 250, 0.04, 'square', 0.045)
+    }, 55)
+  }, [playTone, resume])
+
+  // Click de traba mecánica al frenar
+  const stopReel = useCallback(() => {
+    if (reelTimer.current) {
+      clearInterval(reelTimer.current)
+      reelTimer.current = null
+    }
+    playTone(180, 0.08, 'square', 0.12)
+    playTone(120, 0.12, 'square', 0.12, 0.06)
+  }, [playTone])
+
+  // Fanfarria triunfal de ganador
   const playWin = useCallback(() => {
     resume()
-    const ctx = getCtx()
-    if (!ctx) return
-    ;[523, 659, 784, 1047, 1319].forEach((f, i) => {
-      playTone(f, 0.35, 'sine', 0.14, i * 0.12)
+    ;[523, 659, 784, 1047, 1319, 1568].forEach((f, i) => {
+      playTone(f, 0.4, 'sine', 0.12, i * 0.11)
     })
   }, [playTone, resume])
 
-  return { resume, startShuffle, stopShuffle, playWin, playTone }
+  return { resume, playChime, playOpen, startReel, stopReel, playWin }
 }

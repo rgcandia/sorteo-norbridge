@@ -1,38 +1,43 @@
 import { useState, useCallback, useEffect } from 'react'
 
-export interface Ganador {
-  nombre: string
+export interface Resultado {
   premio: string
+  ganador: string
   fecha: string
 }
 
 const K_NOMBRES = 'sorteo_nombres'
 const K_PREMIOS = 'sorteo_premios'
-const K_GANADORES = 'sorteo_ganadores'
+const K_RESULTADOS = 'sorteo_resultados'
+const K_ORDEN = 'sorteo_orden'
 
-function leerArray<T>(key: string): T[] {
+function leer<T>(key: string): T | null {
   try {
     const raw = localStorage.getItem(key)
-    return raw ? (JSON.parse(raw) as T[]) : []
+    return raw ? (JSON.parse(raw) as T) : null
   } catch {
-    return []
+    return null
   }
 }
 
-function guardarArray(key: string, valor: unknown[]): void {
+function guardar(key: string, valor: unknown): void {
   localStorage.setItem(key, JSON.stringify(valor))
 }
+
+export type OrdenPremios = 'aleatorio' | 'manual'
 
 export function useLottery() {
   const [nombres, setNombres] = useState<string[]>([])
   const [premios, setPremios] = useState<string[]>([])
-  const [ganadores, setGanadores] = useState<Ganador[]>([])
+  const [resultados, setResultados] = useState<Resultado[]>([])
+  const [premioActual, setPremioActual] = useState<string | null>(null)
+  const [ordenPremios, setOrdenPremios] = useState<OrdenPremios>('aleatorio')
 
-  // Carga inicial desde localStorage
   useEffect(() => {
-    setNombres(leerArray<string>(K_NOMBRES))
-    setPremios(leerArray<string>(K_PREMIOS))
-    setGanadores(leerArray<Ganador>(K_GANADORES))
+    setNombres(leer<string[]>(K_NOMBRES) ?? [])
+    setPremios(leer<string[]>(K_PREMIOS) ?? [])
+    setResultados(leer<Resultado[]>(K_RESULTADOS) ?? [])
+    setOrdenPremios(leer<OrdenPremios>(K_ORDEN) ?? 'aleatorio')
   }, [])
 
   const cargarNombres = useCallback((texto: string) => {
@@ -41,69 +46,94 @@ export function useLottery() {
       .map((n) => n.trim())
       .filter((n) => n.length > 0)
     setNombres(lista)
-    guardarArray(K_NOMBRES, lista)
+    guardar(K_NOMBRES, lista)
     return lista.length
   }, [])
 
   const cargarPremios = useCallback((lista: string[]) => {
     const limpia = lista.map((p) => p.trim()).filter((p) => p.length > 0)
     setPremios(limpia)
-    guardarArray(K_PREMIOS, limpia)
+    guardar(K_PREMIOS, limpia)
   }, [])
 
-  const sortear = useCallback((): Ganador | null => {
-    if (nombres.length === 0) return null
+  const moverPremio = useCallback((idx: number, dir: -1 | 1) => {
+    setPremios((prev) => {
+      const j = idx + dir
+      if (j < 0 || j >= prev.length) return prev
+      const copia = [...prev]
+      ;[copia[idx], copia[j]] = [copia[j], copia[idx]]
+      guardar(K_PREMIOS, copia)
+      return copia
+    })
+  }, [])
 
-    const idxNombre = Math.floor(Math.random() * nombres.length)
-    const nombre = nombres[idxNombre]
+  const setOrden = useCallback((o: OrdenPremios) => {
+    setOrdenPremios(o)
+    guardar(K_ORDEN, o)
+  }, [])
 
-    let premio = 'Premio sorpresa'
-    if (premios.length > 0) {
-      const idxPremio = Math.floor(Math.random() * premios.length)
-      premio = premios[idxPremio]
-    }
+  // Saca un premio del pool y lo fija como premio actual
+  const sortearPremio = useCallback((): string | null => {
+    if (premios.length === 0) return null
+    const idx = ordenPremios === 'manual' ? 0 : Math.floor(Math.random() * premios.length)
+    const premio = premios[idx]
+    const nuevosPremios = premios.filter((_, i) => i !== idx)
+    setPremios(nuevosPremios)
+    setPremioActual(premio)
+    guardar(K_PREMIOS, nuevosPremios)
+    return premio
+  }, [premios, ordenPremios])
 
-    const nuevoGanador: Ganador = {
-      nombre,
-      premio,
+  // Saca un ganador del pool y lo combina con el premio actual
+  const sortearGanador = useCallback((): Resultado | null => {
+    if (!premioActual || nombres.length === 0) return null
+    const idx = Math.floor(Math.random() * nombres.length)
+    const ganador = nombres[idx]
+
+    const nuevoResultado: Resultado = {
+      premio: premioActual,
+      ganador,
       fecha: new Date().toLocaleString('es-AR'),
     }
 
-    const nuevosNombres = nombres.filter((_, i) => i !== idxNombre)
-    const nuevosPremios = premios.filter((p) => p !== premio)
-
+    const nuevosNombres = nombres.filter((_, i) => i !== idx)
     setNombres(nuevosNombres)
-    setPremios(nuevosPremios)
-    setGanadores((prev) => [nuevoGanador, ...prev])
+    setResultados((prev) => [...prev, nuevoResultado])
+    setPremioActual(null)
 
-    guardarArray(K_NOMBRES, nuevosNombres)
-    guardarArray(K_PREMIOS, nuevosPremios)
-    guardarArray(K_GANADORES, [nuevoGanador, ...ganadores])
-
-    return nuevoGanador
-  }, [nombres, premios, ganadores])
+    guardar(K_NOMBRES, nuevosNombres)
+    guardar(K_RESULTADOS, [nuevoResultado, ...resultados])
+    return nuevoResultado
+  }, [premioActual, nombres, resultados])
 
   const reiniciar = useCallback(() => {
-    setGanadores([])
-    guardarArray(K_GANADORES, [])
+    setResultados([])
+    setPremioActual(null)
+    guardar(K_RESULTADOS, [])
   }, [])
 
   const borrarTodo = useCallback(() => {
     setNombres([])
     setPremios([])
-    setGanadores([])
+    setResultados([])
+    setPremioActual(null)
     localStorage.removeItem(K_NOMBRES)
     localStorage.removeItem(K_PREMIOS)
-    localStorage.removeItem(K_GANADORES)
+    localStorage.removeItem(K_RESULTADOS)
   }, [])
 
   return {
     nombres,
     premios,
-    ganadores,
+    resultados,
+    premioActual,
+    ordenPremios,
     cargarNombres,
     cargarPremios,
-    sortear,
+    moverPremio,
+    setOrden,
+    sortearPremio,
+    sortearGanador,
     reiniciar,
     borrarTodo,
   }
