@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react'
 import confetti from 'canvas-confetti'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Gift, Trophy, ListChecks, X, Maximize, Settings } from 'lucide-react'
 import Reel from './Reel'
 import { useSound } from '../hooks/useSound'
 import type { Resultado } from '../hooks/useLottery'
@@ -30,6 +31,8 @@ export default function LotteryScreen({
   const [girandoNombre, setGirandoNombre] = useState(false)
   const [resultadoPremio, setResultadoPremio] = useState<string | null>(null)
   const [resultadoNombre, setResultadoNombre] = useState<string | null>(null)
+  const [ganadorActual, setGanadorActual] = useState<Resultado | null>(null)
+  const [mostrarResultados, setMostrarResultados] = useState(false)
   const { resume, startReel, stopReel, playWin } = useSound()
 
   const dispararConfetti = useCallback(() => {
@@ -65,6 +68,7 @@ export default function LotteryScreen({
     resume()
     const res = sortearGanador()
     if (!res) return
+    setGanadorActual(res)
     setResultadoNombre(res.ganador)
     setGirandoNombre(true)
     startReel()
@@ -77,13 +81,26 @@ export default function LotteryScreen({
     dispararConfetti()
   }
 
+  function cerrarGanador() {
+    setGanadorActual(null)
+    setResultadoPremio(null)
+    setResultadoNombre(null)
+  }
+
+  function toggleFullscreen() {
+    if (document.fullscreenElement) document.exitFullscreen()
+    else document.documentElement.requestFullscreen()
+  }
+
   const sinPremios = premios.length === 0 && !premioActual
-  const hayGanador = resultadoNombre !== null && !girandoNombre
+  const mostrarModal = ganadorActual !== null && !girandoNombre
 
   return (
     <div className="lottery">
       <div className="lottery-topbar">
-        <button className="btn btn-ghost" onClick={onVolver}>← Configurar</button>
+        <button className="btn btn-ghost" onClick={onVolver} title="Configurar">
+          <Settings size={18} />
+        </button>
         <div className="lottery-titulo">
           <span className="lottery-brand">SORTEO · DÍA DEL MAESTRO</span>
           <span className="lottery-contador">
@@ -91,9 +108,17 @@ export default function LotteryScreen({
           </span>
         </div>
         <div className="lottery-topbar-acciones">
-          <span className="lottery-ganados">Ganados: {resultados.length}</span>
+          <button className="btn btn-ghost" onClick={() => setMostrarResultados(true)} title="Ver resultados">
+            <ListChecks size={18} />
+            <span className="topbar-badge">{resultados.length}</span>
+          </button>
+          <button className="btn btn-ghost" onClick={toggleFullscreen} title="Pantalla completa">
+            <Maximize size={18} />
+          </button>
           {sinPremios && (
-            <button className="btn btn-primary" onClick={onTerminar}>Ver resultados →</button>
+            <button className="btn btn-primary" onClick={onTerminar}>
+              <Trophy size={16} /> Resultados
+            </button>
           )}
         </div>
       </div>
@@ -104,50 +129,119 @@ export default function LotteryScreen({
             items={premios}
             resultado={resultadoPremio}
             girando={girandoPremio}
-            label="PREMIO"
+            label="Premio"
             onFin={finPremio}
           />
           <Reel
             items={nombres}
             resultado={resultadoNombre}
             girando={girandoNombre}
-            label="GANADOR"
+            label="Ganador"
             onFin={finNombre}
           />
         </div>
 
         <div className="lottery-controles">
-          {!premioActual && !hayGanador && (
-            <button className="btn btn-primary btn-grande" onClick={girarPremio} disabled={girandoPremio || girandoNombre || premios.length === 0}>
-              {girandoPremio ? 'Sorteando premio...' : '🎁 SORTEAR PREMIO'}
+          {!premioActual && !mostrarModal && (
+            <button
+              className="btn btn-primary btn-grande"
+              onClick={girarPremio}
+              disabled={girandoPremio || girandoNombre || premios.length === 0}
+            >
+              <Gift size={20} /> {girandoPremio ? 'Sorteando premio...' : 'Sortear premio'}
             </button>
           )}
 
-          {premioActual && !hayGanador && (
-            <motion.div className="premio-fijado" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
+          {premioActual && !mostrarModal && (
+            <motion.div className="premio-fijado" initial={{ scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
               <span className="premio-fijado-label">Premio sorteado</span>
-              <span className="premio-fijado-valor">🎁 {premioActual}</span>
-              <button className="btn btn-primary btn-grande" onClick={girarNombre} disabled={girandoNombre || girandoPremio || nombres.length === 0}>
-                {girandoNombre ? 'Sorteando ganador...' : '🎰 SORTEAR GANADOR'}
+              <span className="premio-fijado-valor">{premioActual}</span>
+              <button
+                className="btn btn-primary btn-grande"
+                onClick={girarNombre}
+                disabled={girandoNombre || girandoPremio || nombres.length === 0}
+              >
+                <Trophy size={20} /> {girandoNombre ? 'Sorteando ganador...' : 'Sortear ganador'}
               </button>
-            </motion.div>
-          )}
-
-          {hayGanador && (
-            <motion.div className="ganador" initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 180, damping: 14 }}>
-              <span className="ganador-label">¡Ganador!</span>
-              <span className="ganador-premio">🎁 {premioActual ?? resultadoPremio}</span>
-              <h2 className="ganador-nombre">{resultadoNombre}</h2>
-              <button className="btn btn-primary btn-grande" onClick={() => { setResultadoPremio(null); setResultadoNombre(null); }} disabled={girandoNombre || girandoPremio}>
-                {premios.length === 0 ? 'Último sorteo' : 'Siguiente premio'}
-              </button>
-              {premios.length === 0 && (
-                <button className="btn btn-ghost" onClick={onTerminar}>Ver resultados →</button>
-              )}
             </motion.div>
           )}
         </div>
       </div>
+
+      {/* Modal del ganador */}
+      <AnimatePresence>
+        {mostrarModal && ganadorActual && (
+          <motion.div
+            className="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="modal-ganador"
+              initial={{ scale: 0.6, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.6, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 16 }}
+            >
+              <Trophy className="modal-ganador-trofeo" size={64} />
+              <span className="ganador-label">¡Ganador!</span>
+              <span className="modal-premio">{ganadorActual.premio}</span>
+              <h2 className="ganador-nombre">{ganadorActual.ganador}</h2>
+              <div className="modal-acciones">
+                {premios.length > 0 && (
+                  <button className="btn btn-primary btn-grande" onClick={cerrarGanador}>
+                    Siguiente premio
+                  </button>
+                )}
+                <button className="btn btn-ghost btn-grande" onClick={onTerminar}>
+                  Ver resultados
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Panel de resultados */}
+      <AnimatePresence>
+        {mostrarResultados && (
+          <motion.div
+            className="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setMostrarResultados(false)}
+          >
+            <motion.div
+              className="panel-resultados"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'tween', duration: 0.25 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="panel-resultados-header">
+                <h3>Resultados ({resultados.length})</h3>
+                <button className="btn-x" onClick={() => setMostrarResultados(false)}><X size={20} /></button>
+              </div>
+              {resultados.length === 0 ? (
+                <p className="empty">Todavía no hay ganadores.</p>
+              ) : (
+                <ul className="panel-lista">
+                  {resultados.map((r, i) => (
+                    <li key={`${r.ganador}-${i}`}>
+                      <span className="panel-num">{i + 1}</span>
+                      <span className="panel-ganador">{r.ganador}</span>
+                      <span className="panel-premio">{r.premio}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

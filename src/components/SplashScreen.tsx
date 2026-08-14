@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { Dices } from 'lucide-react'
 import { useSound } from '../hooks/useSound'
 
 interface SplashScreenProps {
@@ -91,7 +92,7 @@ export default function SplashScreen({ onIniciar }: SplashScreenProps) {
           whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.94 }}
         >
-          🎰 ¡QUE EMPIECEN LOS JUEGOS!
+          <Dices size={22} /> ¡QUE EMPIECEN LOS JUEGOS!
         </motion.button>
       </motion.div>
 

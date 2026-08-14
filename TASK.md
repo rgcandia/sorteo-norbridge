@@ -10,6 +10,32 @@ Registro de tareas y decisiones del proyecto.
 
 ---
 
+## 2026-08-14 — Retoque (feedback del usuario)
+
+### Mejoras aplicadas
+
+| Mejora | Detalle |
+|--------|---------|
+| **Tambor sin revelar** | Cuando no hay resultado ni giro, el tambor muestra "?" (placeholder) en vez del primer nombre/premio. Evita revelar el contenido antes de sortear. |
+| **Modal del ganador** | El ganador aparece en un **modal overlay** centrado (trofeo + premio grande + nombre gigante), ya no abajo. Para apreciar mejor premio y ganador. |
+| **Panel de resultados** | Botón lateral que abre un panel con la tabla de ganadores acumulados durante el sorteo. |
+| **SVG en vez de emojis** | Instalado `lucide-react`. Reemplazados 🎁🎰🎲📋🏆 por iconos SVG (Gift, Trophy, Dices, Shuffle, ListOrdered, ListChecks, X, Maximize, Settings). |
+| **Botón fullscreen** | Se agregó ⛶ (Maximize) en la barra superior del sorteo. |
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---------|--------|
+| `src/components/Reel.tsx` | Placeholder "?" cuando idle sin resultado |
+| `src/components/LotteryScreen.tsx` | Modal de ganador + panel de resultados + iconos SVG + fullscreen |
+| `src/components/SplashScreen.tsx` | Icono Dices en el botón |
+| `src/components/SetupScreen.tsx` | Iconos Shuffle/ListOrdered en el toggle de orden |
+| `src/components/ResultsScreen.tsx` | Icono Trophy |
+| `src/index.css` | Estilos modal, panel, placeholder, botones con iconos |
+| `package.json` | Nueva dependencia `lucide-react` |
+
+---
+
 ## 2026-08-14 — Rediseño completo a "Casino" (día del maestro)
 
 ### Contexto

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Trophy } from 'lucide-react'
 import type { Resultado } from '../hooks/useLottery'
 
 interface ResultsScreenProps {
@@ -15,7 +16,7 @@ export default function ResultsScreen({ resultados, onReiniciar, onVolver }: Res
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        🏆 ¡GANADORES!
+        <Trophy className="results-trofeo" size={48} /> ¡GANADORES!
       </motion.h1>
       <p className="results-sub">Feliz Día del Maestro — Norbridge 2026</p>
 

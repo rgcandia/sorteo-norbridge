@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Dices, Shuffle, ListOrdered } from 'lucide-react'
 import { NOMBRES_SEED, PREMIOS_SEED } from '../data/seed'
 import type { OrdenPremios } from '../hooks/useLottery'
 
@@ -54,7 +55,7 @@ export default function SetupScreen({
     <div className="setup">
       <header className="setup-header">
         <button className="btn btn-ghost setup-volver" onClick={onVolver}>← Volver a la portada</button>
-        <h1>🎰 Configurar sorteo</h1>
+        <h1><Dices size={26} className="inline-icono" /> Configurar sorteo</h1>
         <p className="setup-sub">Cargá los participantes y los premios, luego iniciá el sorteo.</p>
       </header>
 
@@ -84,13 +85,13 @@ export default function SetupScreen({
                 className={`btn ${ordenPremios === 'aleatorio' ? 'btn-primary' : 'btn-ghost'}`}
                 onClick={() => setOrden('aleatorio')}
               >
-                🎲 Aleatorio
+                <Shuffle size={16} /> Aleatorio
               </button>
               <button
                 className={`btn ${ordenPremios === 'manual' ? 'btn-primary' : 'btn-ghost'}`}
                 onClick={() => setOrden('manual')}
               >
-                📋 Manual (en orden)
+                <ListOrdered size={16} /> Manual (en orden)
               </button>
             </div>
             {ordenPremios === 'manual' && (
@@ -141,7 +142,7 @@ export default function SetupScreen({
         >
           {nombres.length === 0 || premios.length === 0
             ? 'Cargá participantes y premios primero'
-            : `🎰 Empezar sorteo (${nombres.length} participantes, ${premios.length} premios)`}
+            : `Empezar sorteo (${nombres.length} participantes, ${premios.length} premios)`}
         </button>
       </footer>
     </div>

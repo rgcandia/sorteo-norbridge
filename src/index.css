@@ -44,6 +44,10 @@ button {
   font-size: 0.95rem;
   font-weight: 600;
   transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  justify-content: center;
 }
 
 .btn:hover {
@@ -616,6 +620,148 @@ button {
 
 .empty {
   color: var(--texto-suave);
+}
+
+/* ===== Reel placeholder ===== */
+.reel-placeholder {
+  font-size: 3rem;
+  font-weight: 800;
+  color: rgba(198, 162, 70, 0.5);
+}
+
+/* ===== Modal ganador ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.modal-ganador {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: center;
+  background: radial-gradient(ellipse at top, #12294f, var(--negro));
+  border: 2px solid var(--dorado);
+  border-radius: 24px;
+  padding: 2.5rem 3rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 60px rgba(198, 162, 70, 0.3);
+  max-width: min(90vw, 640px);
+}
+
+.modal-ganador-trofeo {
+  color: var(--dorado);
+  filter: drop-shadow(0 0 20px rgba(198, 162, 70, 0.6));
+}
+
+.modal-premio {
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--dorado-claro);
+}
+
+.modal-acciones {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ===== Panel resultados (lateral) ===== */
+.panel-resultados {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: min(440px, 90vw);
+  background: var(--negro-suave);
+  border-left: 1px solid var(--dorado);
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.panel-resultados-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.panel-resultados-header h3 {
+  color: var(--dorado);
+  font-size: 1.1rem;
+}
+
+.panel-lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.panel-lista li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.7rem;
+  background: var(--navy-dark);
+  border-radius: 8px;
+  border-left: 3px solid var(--dorado);
+}
+
+.panel-num {
+  color: var(--dorado);
+  font-weight: 700;
+  min-width: 24px;
+}
+
+.panel-ganador {
+  flex: 1;
+  font-weight: 700;
+}
+
+.panel-premio {
+  color: var(--dorado-claro);
+  font-size: 0.85rem;
+  text-align: right;
+}
+
+/* ===== Utilidades ===== */
+.topbar-badge {
+  background: var(--dorado);
+  color: var(--negro);
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  margin-left: 0.3rem;
+}
+
+.inline-icono {
+  vertical-align: middle;
+  margin-right: 0.3rem;
+}
+
+.results-trofeo {
+  color: var(--dorado);
+  margin-bottom: 0.2rem;
+}
+
+.btn-jugar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* ===== Responsive ===== */

@@ -53,15 +53,20 @@ export default function Reel({ items, resultado, girando, label, onFin }: ReelPr
   }, [girando, lista, resultado])
 
   const itemActual = lista[indice] ?? ''
+  const mostrarPlaceholder = !girando && !resultado
 
   return (
     <div className="reel">
       <div className="reel-label">{label}</div>
       <div className="reel-marco">
         <div className="reel-ventana">
-          <span className={`reel-item ${girando && !frenando ? 'reel-item--rapido' : ''}`}>
-            {itemActual}
-          </span>
+          {mostrarPlaceholder ? (
+            <span className="reel-placeholder">?</span>
+          ) : (
+            <span className={`reel-item ${girando && !frenando ? 'reel-item--rapido' : ''}`}>
+              {itemActual}
+            </span>
+          )}
         </div>
       </div>
     </div>
