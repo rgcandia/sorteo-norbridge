@@ -37,7 +37,12 @@ export default function ResultsScreen({
       }
       lanzar()
     } else {
-      confetti({ particleCount: 40, spread: 70, origin: { x: 0.5, y: 0.4 }, colors: ['#C6A246', '#f1c40f'] })
+      // Burst moderado: ráfaga central + ráfagas laterales a los 250ms
+      confetti({ particleCount: 80, spread: 90, origin: { x: 0.5, y: 0.4 }, colors: ['#C6A246', '#ffffff', '#f1c40f', '#2ecc71'] })
+      setTimeout(() => {
+        confetti({ particleCount: 50, angle: 60, spread: 70, origin: { x: 0, y: 0.6 }, colors: ['#C6A246', '#f1c40f'] })
+        confetti({ particleCount: 50, angle: 120, spread: 70, origin: { x: 1, y: 0.6 }, colors: ['#C6A246', '#f1c40f'] })
+      }, 250)
     }
   }, [celebrar])
 

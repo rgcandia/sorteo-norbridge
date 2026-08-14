@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import LucesChase from './LucesChase'
 
 interface ReelProps {
   items: string[]
@@ -59,6 +60,7 @@ export default function Reel({ items, resultado, girando, label, onFin }: ReelPr
     <div className="reel">
       <div className="reel-label">{label}</div>
       <div className="reel-marco">
+        <LucesChase cantidad={14} />
         <div className="reel-ventana">
           {mostrarPlaceholder ? (
             <span className="reel-placeholder">?</span>
@@ -68,6 +70,7 @@ export default function Reel({ items, resultado, girando, label, onFin }: ReelPr
             </span>
           )}
         </div>
+        <LucesChase cantidad={14} />
       </div>
     </div>
   )
