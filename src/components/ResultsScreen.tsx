@@ -8,6 +8,7 @@ import type { Resultado } from '../hooks/useLottery'
 interface ResultsScreenProps {
   resultados: Resultado[]
   verificarClave: (clave: string) => boolean
+  celebrar: boolean
   onNuevoSorteo: () => void
   onReiniciarTodo: () => void
   onVolver: () => void
@@ -16,24 +17,29 @@ interface ResultsScreenProps {
 export default function ResultsScreen({
   resultados,
   verificarClave,
+  celebrar,
   onNuevoSorteo,
   onReiniciarTodo,
   onVolver,
 }: ResultsScreenProps) {
   const [mostrarReset, setMostrarReset] = useState(false)
 
-  // Celebración final al entrar a la pantalla de resultados
+  // Celebración: si es el final del evento, mucho confetti; si es vista manual, un burst leve
   useEffect(() => {
-    const duracion = 4000
-    const fin = Date.now() + duracion
-    const lanzar = () => {
-      confetti({ particleCount: 100, spread: 120, origin: { x: 0.5, y: 0.35 }, colors: ['#C6A246', '#ffffff', '#e74c3c', '#f1c40f', '#2ecc71'] })
-      confetti({ particleCount: 60, angle: 60, spread: 75, origin: { x: 0, y: 0.6 }, colors: ['#C6A246', '#f1c40f'] })
-      confetti({ particleCount: 60, angle: 120, spread: 75, origin: { x: 1, y: 0.6 }, colors: ['#C6A246', '#f1c40f'] })
-      if (Date.now() < fin) setTimeout(lanzar, 300)
+    if (celebrar) {
+      const duracion = 4000
+      const fin = Date.now() + duracion
+      const lanzar = () => {
+        confetti({ particleCount: 100, spread: 120, origin: { x: 0.5, y: 0.35 }, colors: ['#C6A246', '#ffffff', '#e74c3c', '#f1c40f', '#2ecc71'] })
+        confetti({ particleCount: 60, angle: 60, spread: 75, origin: { x: 0, y: 0.6 }, colors: ['#C6A246', '#f1c40f'] })
+        confetti({ particleCount: 60, angle: 120, spread: 75, origin: { x: 1, y: 0.6 }, colors: ['#C6A246', '#f1c40f'] })
+        if (Date.now() < fin) setTimeout(lanzar, 300)
+      }
+      lanzar()
+    } else {
+      confetti({ particleCount: 40, spread: 70, origin: { x: 0.5, y: 0.4 }, colors: ['#C6A246', '#f1c40f'] })
     }
-    lanzar()
-  }, [])
+  }, [celebrar])
 
   return (
     <div className="results">

@@ -13,7 +13,7 @@ interface LotteryScreenProps {
   resultados: Resultado[]
   sortearPremio: () => string | null
   sortearGanador: () => Resultado | null
-  onTerminar: () => void
+  onTerminar: (final?: boolean) => void
   onVolver: () => void
 }
 
@@ -35,15 +35,9 @@ export default function LotteryScreen({
   const { resume, startReel, stopReel, playWin } = useSound()
 
   const dispararConfetti = useCallback(() => {
-    const duracion = 3500
-    const fin = Date.now() + duracion
-    const lanzar = () => {
-      confetti({ particleCount: 90, spread: 100, origin: { x: 0.5, y: 0.4 }, colors: ['#C6A246', '#ffffff', '#e74c3c', '#f1c40f', '#2ecc71'] })
-      confetti({ particleCount: 55, angle: 60, spread: 70, origin: { x: 0, y: 0.7 }, colors: ['#C6A246', '#f1c40f'] })
-      confetti({ particleCount: 55, angle: 120, spread: 70, origin: { x: 1, y: 0.7 }, colors: ['#C6A246', '#f1c40f'] })
-      if (Date.now() < fin) setTimeout(lanzar, 250)
-    }
-    lanzar()
+    confetti({ particleCount: 70, spread: 100, origin: { x: 0.5, y: 0.4 }, colors: ['#C6A246', '#ffffff', '#f1c40f', '#2ecc71'] })
+    confetti({ particleCount: 40, angle: 60, spread: 60, origin: { x: 0, y: 0.6 }, colors: ['#C6A246', '#f1c40f'] })
+    confetti({ particleCount: 40, angle: 120, spread: 60, origin: { x: 1, y: 0.6 }, colors: ['#C6A246', '#f1c40f'] })
   }, [])
 
   function girarPremio() {
@@ -107,7 +101,7 @@ export default function LotteryScreen({
           </span>
         </div>
         <div className="lottery-topbar-acciones">
-          <button className="btn btn-ghost" onClick={onTerminar} title="Ver resultados">
+          <button className="btn btn-ghost" onClick={() => onTerminar(false)} title="Ver resultados">
             <ListChecks size={18} />
             <span className="topbar-badge">{resultados.length}</span>
           </button>
@@ -115,7 +109,7 @@ export default function LotteryScreen({
             <Maximize size={18} />
           </button>
           {sinPremios && (
-            <button className="btn btn-primary" onClick={onTerminar}>
+            <button className="btn btn-primary" onClick={() => onTerminar(true)}>
               <Trophy size={16} /> Resultados
             </button>
           )}
@@ -193,7 +187,7 @@ export default function LotteryScreen({
                     Siguiente premio
                   </button>
                 )}
-                <button className="btn btn-ghost btn-grande" onClick={onTerminar}>
+                <button className="btn btn-ghost btn-grande" onClick={() => onTerminar(false)}>
                   Ver resultados
                 </button>
               </div>

@@ -9,6 +9,7 @@ type Pantalla = 'splash' | 'setup' | 'lottery' | 'results'
 
 export default function App() {
   const [pantalla, setPantalla] = useState<Pantalla>('splash')
+  const [esFinal, setEsFinal] = useState(false)
   const {
     nombres,
     premios,
@@ -30,7 +31,11 @@ export default function App() {
 
   switch (pantalla) {
     case 'splash':
-      return <SplashScreen onIniciar={() => setPantalla('setup')} />
+      return (
+        <SplashScreen
+          onIniciar={() => setPantalla(nombres.length > 0 && premios.length > 0 ? 'lottery' : 'setup')}
+        />
+      )
 
     case 'setup':
       return (
@@ -60,7 +65,7 @@ export default function App() {
           resultados={resultados}
           sortearPremio={sortearPremio}
           sortearGanador={sortearGanador}
-          onTerminar={() => setPantalla('results')}
+          onTerminar={(final) => { setEsFinal(final ?? false); setPantalla('results') }}
           onVolver={() => setPantalla('setup')}
         />
       )
@@ -70,6 +75,7 @@ export default function App() {
         <ResultsScreen
           resultados={resultados}
           verificarClave={verificarClave}
+          celebrar={esFinal}
           onNuevoSorteo={() => { reiniciar(); setPantalla('setup') }}
           onReiniciarTodo={() => { borrarTodo(); setPantalla('setup') }}
           onVolver={() => setPantalla('splash')}
