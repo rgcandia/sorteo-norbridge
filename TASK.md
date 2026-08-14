@@ -10,6 +10,32 @@ Registro de tareas y decisiones del proyecto.
 
 ---
 
+## 2026-08-14 — Botón de reset con clave de admin
+
+### Mejora aplicada
+
+| Elemento | Detalle |
+|----------|---------|
+| **Botón "Reiniciar todo"** | En la pantalla de resultados, con icono RotateCcw. |
+| **Modal de confirmación** | Avisa que se borran participantes, premios y resultados (irreversible). |
+| **Clave de admin** | El reset pide una clave. Default: `norbridge2026`. Configurable desde la pantalla de configuración (campo "Clave de administrador"). |
+
+### Razón
+
+En un evento en TV con público, el reset accidental es un riesgo real. La doble protección (confirmación + clave) evita borrar todo por error.
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---------|--------|
+| `src/hooks/useLottery.ts` | `claveAdmin` + `setClaveAdmin` + `verificarClave` (persistido en `sorteo_clave`, default `norbridge2026`) |
+| `src/components/ResultsScreen.tsx` | Botón "Reiniciar todo" + modal de confirmación con input de clave |
+| `src/components/SetupScreen.tsx` | Campo para cambiar la clave de administrador |
+| `src/App.tsx` | Pasa `claveAdmin`/`setClaveAdmin`/`verificarClave`/`borrarTodo` |
+| `src/index.css` | Estilos `.btn-danger`, modal de confirmación, campo de clave |
+
+---
+
 ## 2026-08-14 — Retoque (feedback del usuario)
 
 ### Mejoras aplicadas

@@ -7,10 +7,12 @@ interface SetupScreenProps {
   nombres: string[]
   premios: string[]
   ordenPremios: OrdenPremios
+  claveAdmin: string
   cargarNombres: (texto: string) => number
   cargarPremios: (lista: string[]) => void
   moverPremio: (idx: number, dir: -1 | 1) => void
   setOrden: (o: OrdenPremios) => void
+  setClaveAdmin: (clave: string) => void
   onComenzar: () => void
   onVolver: () => void
 }
@@ -19,15 +21,18 @@ export default function SetupScreen({
   nombres,
   premios,
   ordenPremios,
+  claveAdmin,
   cargarNombres,
   cargarPremios,
   moverPremio,
   setOrden,
+  setClaveAdmin,
   onComenzar,
   onVolver,
 }: SetupScreenProps) {
   const [textoNombres, setTextoNombres] = useState(nombres.join('\n'))
   const [nuevoPremio, setNuevoPremio] = useState('')
+  const [claveLocal, setClaveLocal] = useState(claveAdmin)
 
   function handleCargarSeed() {
     const n = NOMBRES_SEED.join('\n')
@@ -135,15 +140,27 @@ export default function SetupScreen({
       </div>
 
       <footer className="setup-footer">
-        <button
-          className="btn btn-primary btn-grande"
-          onClick={onComenzar}
-          disabled={nombres.length === 0 || premios.length === 0}
-        >
-          {nombres.length === 0 || premios.length === 0
-            ? 'Cargá participantes y premios primero'
-            : `Empezar sorteo (${nombres.length} participantes, ${premios.length} premios)`}
-        </button>
+        <div className="setup-footer-contenido">
+          <div className="clave-admin">
+            <label className="clave-admin-label">Clave de administrador (para reiniciar):</label>
+            <input
+              type="text"
+              className="clave-admin-input"
+              value={claveLocal}
+              onChange={(e) => setClaveLocal(e.target.value)}
+              onBlur={() => setClaveAdmin(claveLocal.trim() || claveAdmin)}
+            />
+          </div>
+          <button
+            className="btn btn-primary btn-grande"
+            onClick={onComenzar}
+            disabled={nombres.length === 0 || premios.length === 0}
+          >
+            {nombres.length === 0 || premios.length === 0
+              ? 'Cargá participantes y premios primero'
+              : `Empezar sorteo (${nombres.length} participantes, ${premios.length} premios)`}
+          </button>
+        </div>
       </footer>
     </div>
   )

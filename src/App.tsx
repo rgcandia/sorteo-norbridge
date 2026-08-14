@@ -15,6 +15,7 @@ export default function App() {
     resultados,
     premioActual,
     ordenPremios,
+    claveAdmin,
     cargarNombres,
     cargarPremios,
     moverPremio,
@@ -22,6 +23,9 @@ export default function App() {
     sortearPremio,
     sortearGanador,
     reiniciar,
+    setClaveAdmin,
+    verificarClave,
+    borrarTodo,
   } = useLottery()
 
   switch (pantalla) {
@@ -34,10 +38,12 @@ export default function App() {
           nombres={nombres}
           premios={premios}
           ordenPremios={ordenPremios}
+          claveAdmin={claveAdmin}
           cargarNombres={cargarNombres}
           cargarPremios={cargarPremios}
           moverPremio={moverPremio}
           setOrden={setOrden}
+          setClaveAdmin={setClaveAdmin}
           onComenzar={() => setPantalla('lottery')}
           onVolver={() => setPantalla('splash')}
         />
@@ -61,7 +67,9 @@ export default function App() {
       return (
         <ResultsScreen
           resultados={resultados}
-          onReiniciar={() => { reiniciar(); setPantalla('setup') }}
+          verificarClave={verificarClave}
+          onNuevoSorteo={() => { reiniciar(); setPantalla('setup') }}
+          onReiniciarTodo={() => { borrarTodo(); setPantalla('setup') }}
           onVolver={() => setPantalla('splash')}
         />
       )

@@ -10,6 +10,9 @@ const K_NOMBRES = 'sorteo_nombres'
 const K_PREMIOS = 'sorteo_premios'
 const K_RESULTADOS = 'sorteo_resultados'
 const K_ORDEN = 'sorteo_orden'
+const K_CLAVE = 'sorteo_clave'
+
+const CLAVE_DEFAULT = 'norbridge2026'
 
 function leer<T>(key: string): T | null {
   try {
@@ -32,12 +35,14 @@ export function useLottery() {
   const [resultados, setResultados] = useState<Resultado[]>([])
   const [premioActual, setPremioActual] = useState<string | null>(null)
   const [ordenPremios, setOrdenPremios] = useState<OrdenPremios>('aleatorio')
+  const [claveAdmin, setClaveAdminState] = useState<string>(CLAVE_DEFAULT)
 
   useEffect(() => {
     setNombres(leer<string[]>(K_NOMBRES) ?? [])
     setPremios(leer<string[]>(K_PREMIOS) ?? [])
     setResultados(leer<Resultado[]>(K_RESULTADOS) ?? [])
     setOrdenPremios(leer<OrdenPremios>(K_ORDEN) ?? 'aleatorio')
+    setClaveAdminState(leer<string>(K_CLAVE) ?? CLAVE_DEFAULT)
   }, [])
 
   const cargarNombres = useCallback((texto: string) => {
@@ -112,6 +117,13 @@ export function useLottery() {
     guardar(K_RESULTADOS, [])
   }, [])
 
+  const setClaveAdmin = useCallback((clave: string) => {
+    setClaveAdminState(clave)
+    guardar(K_CLAVE, clave)
+  }, [])
+
+  const verificarClave = useCallback((clave: string) => clave === claveAdmin, [claveAdmin])
+
   const borrarTodo = useCallback(() => {
     setNombres([])
     setPremios([])
@@ -128,6 +140,7 @@ export function useLottery() {
     resultados,
     premioActual,
     ordenPremios,
+    claveAdmin,
     cargarNombres,
     cargarPremios,
     moverPremio,
@@ -135,6 +148,8 @@ export function useLottery() {
     sortearPremio,
     sortearGanador,
     reiniciar,
+    setClaveAdmin,
+    verificarClave,
     borrarTodo,
   }
 }

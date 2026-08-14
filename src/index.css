@@ -618,6 +618,40 @@ button {
   padding-top: 1.5rem;
 }
 
+.setup-footer-contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.clave-admin {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.clave-admin-label {
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}
+
+.clave-admin-input {
+  background: var(--navy-dark);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  color: var(--texto);
+  padding: 0.45rem 0.8rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  width: 180px;
+}
+
+.clave-admin-input:focus {
+  outline: none;
+  border-color: var(--dorado);
+}
+
 .empty {
   color: var(--texto-suave);
 }
@@ -762,6 +796,78 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+/* ===== Botón danger (reset) ===== */
+.btn-danger {
+  background: transparent;
+  border: 1px solid rgba(220, 80, 80, 0.5);
+  color: #e88;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  justify-content: center;
+  padding: 0.55rem 1.1rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.btn-danger:hover {
+  background: rgba(220, 80, 80, 0.12);
+  border-color: #e88;
+}
+
+/* ===== Modal confirmación reset ===== */
+.modal-confirmar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  background: radial-gradient(ellipse at top, #1a1330, var(--negro));
+  border: 2px solid rgba(220, 80, 80, 0.6);
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: min(90vw, 440px);
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.modal-confirmar-titulo {
+  color: #e88;
+  font-size: 1.3rem;
+}
+
+.modal-confirmar-texto {
+  color: var(--texto-suave);
+  line-height: 1.5;
+}
+
+.modal-confirmar-input {
+  background: var(--navy-dark);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  color: var(--texto);
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+}
+
+.modal-confirmar-input:focus {
+  outline: none;
+  border-color: #e88;
+}
+
+.modal-confirmar-error {
+  color: #e88;
+  font-size: 0.85rem;
+}
+
+.modal-cerrar {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
 }
 
 /* ===== Responsive ===== */
