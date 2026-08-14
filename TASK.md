@@ -6,7 +6,32 @@ Registro de tareas y decisiones del proyecto.
 
 ## Estado actual
 
-**Rediseño a Slot Machine Casino** — ✅ implementado. Portada "FELIZ DÍA MAESTROS" + 2 tambores (premio/ganador) + pantalla de resultados. Estética casino (negro + dorado + luces marquee).
+**Rediseño a Slot Machine Casino** — ✅ implementado y pulido. Portada "FELIZ DÍA MAESTROS" + 2 tambores (premio/ganador) con luces chase + destellos + pantalla de resultados con confetti. Estética casino (negro + dorado + luces marquee en portada).
+
+---
+
+## 2026-08-14 — Pulido final (feedback iterativo del usuario)
+
+### Cambios aplicados (commits `82d05cc` → `175b77f`)
+
+| Cambio | Detalle |
+|--------|---------|
+| **Modal del ganador** | El ganador sale en overlay centrado (trofeo + premio + nombre gigante), ya no abajo. |
+| **Placeholder "?"** | Los tambores muestran "?" cuando no hay resultado, sin revelar nombres/premios antes de sortear. |
+| **Iconos SVG** | `lucide-react` reemplaza todos los emojis (Gift, Trophy, Dices, Shuffle, etc.). |
+| **Botón "Ver resultados"** | Lleva a la pantalla de resultados completa (se eliminó el panel lateral). |
+| **Reset protegido** | Botón "Reiniciar todo" en setup y resultados, con modal de confirmación + clave de admin (default `norbridge2026`). |
+| **Sonido casino** | "whir" (zumbido) + "clacks" mecánicos con ruido filtrado, en vez de ticks square. |
+| **Confetti dosificado** | Ganador ~150, "ver resultados" ~180, final del evento ~2.900 (4s). |
+| **Portada → sorteo directo** | Si ya hay datos cargados, "que empiecen los juegos" va directo al sorteo. |
+| **Luces del sorteo** | Luces "chase" en el marco de los tambores + destellos de fondo (24 puntos). Sin marquee (redundante con la portada). |
+| **"Continuar sorteo"** | En resultados, si aún quedan premios, botón para volver al sorteo. |
+
+### Estado de la documentación
+
+- `README.md`: actualizado con arquitectura, flujo, funcionamiento técnico y decisiones.
+- `TASK.md`: registro completo de decisiones y cambios (este archivo).
+- Repo: `https://github.com/rgcandia/sorteo-norbridge`.
 
 ---
 

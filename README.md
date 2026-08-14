@@ -99,12 +99,19 @@ Configuración
 Sorteo (2 tambores)
   ├── Botón "SORTEAR PREMIO" → gira tambor de premio → se fija
   ├── Botón "SORTEAR GANADOR" → gira tambor de ganador → se fija
-  ├── Nombre gigante + confetti + fanfarria
+  ├── Nombre gigante en modal + confetti + fanfarria
   └── Repetir hasta agotar premios → "Ver resultados"
           ↓
 Resultados
-  └── Tabla: # / Premio / Ganador (15 ganadores)
+  ├── Tabla: # / Premio / Ganador
+  ├── "Continuar sorteo" (si quedan premios)
+  ├── "Nuevo sorteo" / "Volver al inicio"
+  └── "Reiniciar todo" (con clave de admin)
 ```
+
+### Protección de reinicio
+
+El botón "Reiniciar todo" (en configuración y resultados) exige una **clave de administrador** para evitar borrados accidentales durante el evento. Clave por defecto: `norbridge2026`, configurable en la pantalla de configuración.
 
 ---
 
@@ -157,9 +164,27 @@ Se cargan con un clic desde la pantalla de configuración.
 |----------|-------|
 | Fondo | Negro `#05060a` + navy con viñeta radial |
 | Acento | Dorado `#C6A246` con destellos |
-| Luces | Marquee de luces parpadeantes (arriba/abajo) |
-| Marco tambor | Gradiente metálico + sombra 3D |
+| Luces | Marquee de luces en la portada; luces "chase" en el marco de los tambores; destellos de fondo en el sorteo |
+| Marco tambor | Gradiente metálico + sombra 3D + luces chase |
 | Tipografía | Georgia serif (títulos/poema) + Inter (UI) |
+
+### Sonidos (Web Audio API, sintetizados)
+
+| Función | Sonido |
+|---------|--------|
+| `playChime()` | Chime suave de entrada |
+| `playOpen()` | Fanfarria de apertura |
+| `startReel()` | "whir" (zumbido de rueda) + clacks mecánicos |
+| `stopReel()` | Triple clack de traba (grave → medio → agudo) |
+| `playWin()` | Fanfarria triunfal + cascada de monedas |
+
+### Confetti dosificado
+
+| Momento | Partículas |
+|---------|-----------|
+| Ganador de cada premio (modal) | ~150 |
+| "Ver resultados" manual | ~180 |
+| Final del evento (se agotan premios) | ~2.900 (4 seg) |
 
 ---
 
