@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import confetti from 'canvas-confetti'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Trophy, RotateCcw } from 'lucide-react'
 import ConfirmResetModal from './ConfirmResetModal'
@@ -20,6 +21,19 @@ export default function ResultsScreen({
   onVolver,
 }: ResultsScreenProps) {
   const [mostrarReset, setMostrarReset] = useState(false)
+
+  // Celebración final al entrar a la pantalla de resultados
+  useEffect(() => {
+    const duracion = 4000
+    const fin = Date.now() + duracion
+    const lanzar = () => {
+      confetti({ particleCount: 100, spread: 120, origin: { x: 0.5, y: 0.35 }, colors: ['#C6A246', '#ffffff', '#e74c3c', '#f1c40f', '#2ecc71'] })
+      confetti({ particleCount: 60, angle: 60, spread: 75, origin: { x: 0, y: 0.6 }, colors: ['#C6A246', '#f1c40f'] })
+      confetti({ particleCount: 60, angle: 120, spread: 75, origin: { x: 1, y: 0.6 }, colors: ['#C6A246', '#f1c40f'] })
+      if (Date.now() < fin) setTimeout(lanzar, 300)
+    }
+    lanzar()
+  }, [])
 
   return (
     <div className="results">
