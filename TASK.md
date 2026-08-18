@@ -6,7 +6,17 @@ Registro de tareas y decisiones del proyecto.
 
 ## Estado actual
 
-**Rediseño a Slot Machine Casino** — ✅ implementado y pulido. Portada "FELIZ DÍA MAESTROS" + 2 tambores (premio/ganador) con luces chase + destellos + pantalla de resultados con confetti. Estética casino (negro + dorado + luces marquee en portada).
+**Rediseño a Slot Machine Casino** — ✅ implementado y pulido. Portada "Celebrando la Educación" + 2 tambores (premio/ganador) con luces chase + destellos + pantalla de resultados con confetti. Estética casino (negro + dorado + luces marquee en portada).
+
+---
+
+## 2026-08-14 — Cambio de título de portada
+
+- [x] Título: `¡FELIZ DÍA MAESTROS!` → `Celebrando la EDUCACIÓN` (dos líneas, "EDUCACIÓN" en dorado)
+- [x] Sello: `✦ COLEGIO NORBRIDGE ✦` → `✦ NORBRIDGE SCHOOL ✦`
+- [x] Poema eliminado (blockquote "Enseñarás a volar...")
+- [x] Lema "Gracias por enseñarnos a volar." se mantiene
+- [x] Ajuste de delays de animación (sin poema, el botón aparece antes: 1.4s)
 
 ---
 

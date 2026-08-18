@@ -37,7 +37,7 @@ export default function SplashScreen({ onIniciar }: SplashScreenProps) {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3, duration: 0.7 }}
         >
-          ✦ COLEGIO NORBRIDGE ✦
+          ✦ NORBRIDGE SCHOOL ✦
         </motion.p>
 
         <motion.h1
@@ -46,39 +46,26 @@ export default function SplashScreen({ onIniciar }: SplashScreenProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.9 }}
         >
-          ¡FELIZ DÍA
+          Celebrando la
           <br />
-          <span className="splash-titulo-dorado">MAESTROS!</span>
+          <span className="splash-titulo-dorado">EDUCACIÓN</span>
         </motion.h1>
 
         <motion.p
           className="splash-lema"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.9 }}
+          transition={{ delay: 1.0, duration: 0.9 }}
         >
           Gracias por enseñarnos a volar.
         </motion.p>
-
-        <motion.blockquote
-          className="splash-poema"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.6, duration: 1 }}
-        >
-          “Enseñarás a volar, pero no volarán tu vuelo.
-          Enseñarás a soñar, pero no soñarán tu sueño.
-          Enseñarás a vivir, pero no vivirán tu vida.
-          Sin embargo, en cada vuelo, en cada sueño y en cada vida,
-          perdurará siempre la huella del camino enseñado.”
-        </motion.blockquote>
 
         <motion.button
           className="btn-jugar"
           onClick={handleIniciar}
           initial={{ opacity: 0, scale: 0.7 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 2.1, type: 'spring', stiffness: 200, damping: 12 }}
+          transition={{ delay: 1.4, type: 'spring', stiffness: 200, damping: 12 }}
           whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.94 }}
         >

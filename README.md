@@ -20,7 +20,7 @@ Sorteo virtual **estilo casino** para eventos institucionales (día del maestro)
 
 Aplicación para sortear premios en un evento (reunión de docentes, día del maestro). El operador:
 
-1. Ve la **portada** "¡FELIZ DÍA MAESTROS!" con lema y botón "¡Que empiecen los juegos!".
+1. Ve la **portada** "Celebrando la Educación" con lema y botón "¡Que empiecen los juegos!".
 2. Carga la lista de participantes y los premios.
 3. Sortea de a uno: gira el **tambor de premio**, luego el **tambor de ganador** (dos botones, máximo suspenso).
 4. Cada ganador se anuncia en pantalla gigante con confetti y fanfarria.
@@ -56,7 +56,7 @@ sorteo-norbridge/
 │   │   ├── useLottery.ts        # Lógica del sorteo + pools + persistencia
 │   │   └── useSound.ts          # Sonidos de casino (Web Audio API)
 │   ├── components/
-│   │   ├── SplashScreen.tsx     # Portada "FELIZ DÍA MAESTROS" + botón inicio + luces
+│   │   ├── SplashScreen.tsx     # Portada "Celebrando la Educación" + botón inicio + luces
 │   │   ├── Reel.tsx             # Tambor de slot reutilizable con desaceleración
 │   │   ├── SetupScreen.tsx      # Carga de nombres + premios + orden (aleatorio/manual)
 │   │   ├── LotteryScreen.tsx    # 2 tambores + 2 botones (premio/ganador)
@@ -87,7 +87,7 @@ Deploy en Vercel: `npm run build` (SPA estática, sin backend).
 ## Flujo de uso
 
 ```
-Portada ("¡FELIZ DÍA MAESTROS!")
+Portada ("Celebrando la Educación")
   └── Botón "¡QUE EMPIECEN LOS JUEGOS!"
           ↓
 Configuración
@@ -166,7 +166,7 @@ Se cargan con un clic desde la pantalla de configuración.
 | Acento | Dorado `#C6A246` con destellos |
 | Luces | Marquee de luces en la portada; luces "chase" en el marco de los tambores; destellos de fondo en el sorteo |
 | Marco tambor | Gradiente metálico + sombra 3D + luces chase |
-| Tipografía | Georgia serif (títulos/poema) + Inter (UI) |
+| Tipografía | Georgia serif (títulos/lema) + Inter (UI) |
 
 ### Sonidos (Web Audio API, sintetizados)
 
