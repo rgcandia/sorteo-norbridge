@@ -151,10 +151,29 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 1.2rem;
   text-align: center;
-  padding: 1rem 2rem;
+  padding: 1.25rem 2rem 1.75rem;
+}
+
+.splash-cabecera {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.splash-poema-centro {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-btn {
+  flex-shrink: 0;
 }
 
 .splash-sello {
@@ -189,14 +208,26 @@ button {
 .splash-poema {
   font-family: Georgia, serif;
   font-style: italic;
-  font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+  font-size: clamp(1.35rem, 2.8vw, 2.1rem);
   color: var(--texto-suave);
-  max-width: 560px;
-  line-height: 1.7;
+  max-width: 800px;
+  line-height: 1.5;
+}
+
+.splash-poema p {
+  white-space: pre-line;
+}
+
+.splash-poema-autor {
+  display: block;
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  color: var(--dorado);
 }
 
 .btn-jugar {
-  margin-top: 0.8rem;
   background: linear-gradient(180deg, #f0d678, var(--dorado));
   color: var(--negro);
   border: 2px solid #f7e6a8;
@@ -393,8 +424,17 @@ button {
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  overflow-y: auto;
+  overflow: hidden;
   background: radial-gradient(ellipse at top, #0d2147 0%, var(--negro) 70%);
+}
+
+.results-header {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .results-titulo {
@@ -406,23 +446,28 @@ button {
 
 .results-sub {
   color: var(--texto-suave);
-  margin-bottom: 1.5rem;
 }
 
 .results-tabla-wrap {
   width: min(760px, 100%);
+  flex: 1 1 auto;
+  min-height: 0;
   background: var(--negro-suave);
   border: 1px solid rgba(198, 162, 70, 0.35);
   border-radius: 16px;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .results-tabla {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 .results-tabla th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   text-align: left;
   padding: 0.9rem 1.2rem;
   color: var(--dorado);
@@ -430,7 +475,7 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.15em;
   border-bottom: 2px solid rgba(198, 162, 70, 0.4);
-  background: rgba(198, 162, 70, 0.08);
+  background: #0e1424;
 }
 
 .results-tabla td {
@@ -455,7 +500,10 @@ button {
 }
 
 .results-acciones {
+  flex-shrink: 0;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
   margin-top: 1.5rem;
 }
@@ -566,12 +614,14 @@ button {
   font-size: 0.8rem;
 }
 
-.premio-input {
+.premio-input,
+.participante-input {
   display: flex;
   gap: 0.6rem;
 }
 
-.premio-input input {
+.premio-input input,
+.participante-input input {
   flex: 1;
   background: var(--navy-dark);
   border: 1px solid var(--borde);
@@ -581,7 +631,8 @@ button {
   font-size: 0.95rem;
 }
 
-.premio-input input:focus {
+.premio-input input:focus,
+.participante-input input:focus {
   outline: none;
   border-color: var(--dorado);
 }

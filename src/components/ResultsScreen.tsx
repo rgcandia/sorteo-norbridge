@@ -52,14 +52,16 @@ export default function ResultsScreen({
 
   return (
     <div className="results">
-      <motion.h1
-        className="results-titulo"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <Trophy className="results-trofeo" size={48} /> ¡GANADORES!
-      </motion.h1>
-      <p className="results-sub">Feliz Día del Maestro — Norbridge 2026</p>
+      <header className="results-header">
+        <motion.h1
+          className="results-titulo"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <Trophy className="results-trofeo" size={48} /> ¡GANADORES!
+        </motion.h1>
+        <p className="results-sub">Feliz Día del Maestro — Norbridge 2026</p>
+      </header>
 
       <motion.div
         className="results-tabla-wrap"
@@ -77,16 +79,11 @@ export default function ResultsScreen({
           </thead>
           <tbody>
             {resultados.map((r, i) => (
-              <motion.tr
-                key={`${r.ganador}-${i}`}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 + i * 0.08 }}
-              >
+              <tr key={`${r.ganador}-${i}`}>
                 <td className="results-num">{i + 1}</td>
                 <td className="results-premio">{r.premio}</td>
                 <td className="results-ganador">{r.ganador}</td>
-              </motion.tr>
+              </tr>
             ))}
             {resultados.length === 0 && (
               <tr>
@@ -97,7 +94,7 @@ export default function ResultsScreen({
         </table>
       </motion.div>
 
-      <div className="results-acciones">
+      <footer className="results-acciones">
         {puedeContinuar && (
           <button className="btn btn-primary btn-grande" onClick={onContinuar}>
             Continuar sorteo
@@ -112,7 +109,7 @@ export default function ResultsScreen({
         <button className="btn btn-danger" onClick={() => setMostrarReset(true)}>
           <RotateCcw size={16} /> Reiniciar todo
         </button>
-      </div>
+      </footer>
 
       {/* Modal de confirmación con clave de admin */}
       <AnimatePresence>

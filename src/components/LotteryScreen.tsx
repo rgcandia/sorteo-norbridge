@@ -147,7 +147,7 @@ export default function LotteryScreen({
             </button>
           )}
 
-          {premioActual && !mostrarModal && (
+          {premioActual && !girandoPremio && !mostrarModal && (
             <motion.div className="premio-fijado" initial={{ scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
               <span className="premio-fijado-label">Premio sorteado</span>
               <span className="premio-fijado-valor">{premioActual}</span>

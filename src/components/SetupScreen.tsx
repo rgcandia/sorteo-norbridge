@@ -37,6 +37,7 @@ export default function SetupScreen({
   onVolver,
 }: SetupScreenProps) {
   const [textoNombres, setTextoNombres] = useState(nombres.join('\n'))
+  const [nuevoParticipante, setNuevoParticipante] = useState('')
   const [nuevoPremio, setNuevoPremio] = useState('')
   const [claveLocal, setClaveLocal] = useState(claveAdmin)
   const [mostrarReset, setMostrarReset] = useState(false)
@@ -50,6 +51,17 @@ export default function SetupScreen({
 
   function handleParsear() {
     cargarNombres(textoNombres)
+  }
+
+  function agregarParticipante() {
+    const p = nuevoParticipante.trim()
+    if (!p) return
+    const texto = textoNombres.trim()
+      ? textoNombres.replace(/\s+$/, '') + '\n' + p
+      : p
+    setTextoNombres(texto)
+    cargarNombres(texto)
+    setNuevoParticipante('')
   }
 
   function agregarPremio() {
@@ -78,12 +90,21 @@ export default function SetupScreen({
             value={textoNombres}
             onChange={(e) => setTextoNombres(e.target.value)}
             onBlur={handleParsear}
-            placeholder="Pegá un nombre por línea, o separados por coma..."
+            placeholder="Un participante por línea (solo el nombre)"
             rows={14}
           />
+          <div className="participante-input">
+            <input
+              value={nuevoParticipante}
+              onChange={(e) => setNuevoParticipante(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && agregarParticipante()}
+              placeholder="Agregar un participante..."
+            />
+            <button className="btn" onClick={agregarParticipante}>Agregar</button>
+          </div>
           <div className="setup-actions">
             <button className="btn" onClick={handleParsear}>Cargar nombres</button>
-            <button className="btn btn-ghost" onClick={handleCargarSeed}>Cargar 150 nombres de ejemplo</button>
+            <button className="btn btn-ghost" onClick={handleCargarSeed}>Cargar participantes de ejemplo</button>
           </div>
         </section>
 
