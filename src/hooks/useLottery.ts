@@ -129,9 +129,13 @@ export function useLottery() {
     setPremios([])
     setResultados([])
     setPremioActual(null)
+    setOrdenPremios('aleatorio')
+    setClaveAdminState(CLAVE_DEFAULT)
     localStorage.removeItem(K_NOMBRES)
     localStorage.removeItem(K_PREMIOS)
     localStorage.removeItem(K_RESULTADOS)
+    localStorage.removeItem(K_ORDEN)
+    localStorage.removeItem(K_CLAVE)
   }, [])
 
   return {

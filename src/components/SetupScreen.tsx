@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { Dices, Shuffle, ListOrdered, RotateCcw } from 'lucide-react'
 import ConfirmResetModal from './ConfirmResetModal'
@@ -41,6 +41,10 @@ export default function SetupScreen({
   const [nuevoPremio, setNuevoPremio] = useState('')
   const [claveLocal, setClaveLocal] = useState(claveAdmin)
   const [mostrarReset, setMostrarReset] = useState(false)
+
+  useEffect(() => {
+    setTextoNombres(nombres.join('\n'))
+  }, [nombres])
 
   function handleCargarSeed() {
     const n = NOMBRES_SEED.join('\n')
