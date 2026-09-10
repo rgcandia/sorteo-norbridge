@@ -161,7 +161,7 @@ export default function SetupScreen({
           </ul>
           {premios.length === 0 && (
             <button className="btn btn-ghost" onClick={() => cargarPremios([...PREMIOS_SEED])}>
-              Cargar 24 premios de ejemplo
+Cargar 24 premios de ejemplo
             </button>
           )}
         </section>
