@@ -198,7 +198,7 @@ Cargar 24 premios de ejemplo
         {mostrarReset && (
           <ConfirmResetModal
             verificarClave={verificarClave}
-            onConfirmar={onReiniciarTodo}
+            onConfirmar={() => { setMostrarReset(false); onReiniciarTodo(); }}
             onCancelar={() => setMostrarReset(false)}
           />
         )}

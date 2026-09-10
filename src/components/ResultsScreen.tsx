@@ -116,7 +116,7 @@ export default function ResultsScreen({
         {mostrarReset && (
           <ConfirmResetModal
             verificarClave={verificarClave}
-            onConfirmar={onReiniciarTodo}
+            onConfirmar={() => { setMostrarReset(false); onReiniciarTodo(); }}
             onCancelar={() => setMostrarReset(false)}
           />
         )}
